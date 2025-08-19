@@ -9,12 +9,3 @@ class Post(models.Model):
     
     def __str__(self):
         return self.title
-
-    @property
-    def file_url(self):
-        if self.file:                 # Safe: False when there is no file
-            try:
-                return self.file.url  # Works only if a file exists
-            except ValueError:
-                pass                  # In case a weird empty value slipped in
-        return static('blog/assets/default.jpg')
