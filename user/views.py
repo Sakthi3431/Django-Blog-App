@@ -1,54 +1,45 @@
 from django.shortcuts import render, redirect
-from .models import User
-from .forms import RegisterForm
-from django.contrib.auth import login, logout
+from .models import *
+from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.models import User as AuthUser
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .forms import LoginForm
+from .forms import *
+from blog.models import *
 
-# Create your views here.
-def user(request):
-    userss = User.objects.all()
-    return render(request, 'user.html', {'userss': userss})
-
-def createUser(request):
-    context = {
-        'form': RegisterForm()
-    }
-
+def LoginPage(request):
     if request.method == "POST":
-        form = RegisterForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('user')
-    else:
-        form = RegisterForm()
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+        user = authenticate(request, username=username, password=password)
 
-    return render(request, 'create_user.html', context)
+        if user is not None:
+            login(request, user)   # creates session
+            return redirect("dashboard")   # or wherever
+        else:
+            return render(request, "login_page.html", {"error": "Invalid username or password"})
 
-def register(request):
+    return render(request, "login_page.html")
+
+def RegisterPage(request):
     if request.method == "POST":
-        form = RegisterForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, "Account created successfully! You can now login.")
-            return redirect('user')  # redirect to login page
-    else:
-        form = RegisterForm()
-    return render(request, 'create_user.html', {'form': form})
+        username = request.POST.get("username")
+        email = request.POST.get("email")
+        password = request.POST.get("password")
+        confirmpassword = request.POST.get("confirmpassword")
 
-def login_view(request):
-    if request.method == "POST":
-        form = LoginForm(request, data=request.POST)
-        if form.is_valid():
-            user = form.get_user()
-            login(request, user)
-            messages.success(request, f"Welcome back, {user.username}!")
-            return redirect('home')  # change 'home' to your homepage URL name
-    else:
-        form = LoginForm()
-    return render(request, 'login.html', {'form': form})
+        if password == confirmpassword:
+            if User.objects.filter(username=username).exists():
+                return render(request, "register_page.html", {"error": "Username already exists!"})
+            user = AuthUser.objects.create_user(username=username, email=email, password=password)
+            user.save()
+            return redirect("login")
+        else:
+            return render(request, "register_page.html", {"error": "Passwords do not match!"})
 
-def logout_view(request):
-    logout(request)
-    messages.info(request, "You have been logged out.")
-    return redirect('login')
+    return render(request, "register_page.html")
+
+@login_required(login_url='/user/login')
+def Dashboard(request):
+    posts = Post.objects.all().order_by('-created_at')  # fetch posts from db
+    return render(request, 'dashboard.html', {'posts': posts})
