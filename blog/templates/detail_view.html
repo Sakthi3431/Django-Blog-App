@@ -1,0 +1,22 @@
+{% extends 'oldbase.html' %}
+{% load static %}
+{% csrf_token %}
+{% block content %}
+
+  <div class="container">
+    <div class="row g-4">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+          <div class="card blog-card h-100">
+            <h5 class="card-title h2 px-3">{{ post.title }}</h5>
+            <div class="card-body">
+              <img src="{{ post.file.url }}" class="card-img-top" alt="post.title">
+              <div class="text-success small">{{ post.created_at }} by {{ post.author }}</div>
+              <div class="blog-content">
+                {{ post.content|linebreaks }}
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+  {% endblock %}

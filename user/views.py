@@ -5,8 +5,7 @@ from django.contrib.auth.models import User as AuthUser
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .forms import *
-from blog.models import *
-
+from blog.models import Post
 def LoginPage(request):
     if request.method == "POST":
         username = request.POST.get("username")
@@ -43,3 +42,7 @@ def RegisterPage(request):
 def Dashboard(request):
     posts = Post.objects.all().order_by('-created_at')  # fetch posts from db
     return render(request, 'dashboard.html', {'posts': posts})
+
+def Detail_view(request, id):
+    selected_post = Post.objects.get(id=id)
+    return render(request, 'detail_view.html', {'post': selected_post})

@@ -23,3 +23,7 @@ def create_blog_post(request):
     else:
         form = PostForm()
     return render(request, 'create_post.html', context)
+
+def Detail_view(request, id):
+    selected_post = PostForm.objects.filter(id=id)
+    return render(request, 'detail_view.html', {'post': selected_post})
