@@ -9,13 +9,9 @@
     <title>Document</title>
     <style>
       footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
   background: #222;
   color: white;
-  padding-top: 10px;
+  padding: 10px;
   text-align: center;
 }
 
@@ -37,7 +33,7 @@
             </form>
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link" href="{% url 'dashboard' %}">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="#about">My Post</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'mypost' %}">My Post</a></li>
                 <li class="nav-item"><a class="nav-link" href="#services">Categories</a></li>
                 <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
                 <li class="nav-item"><a class="nav-link" href="{% url 'create_post' %}"><img src="{% static 'blog/assets/plus.png' %}" alt="+" style="height: 30px;"></a></li>
