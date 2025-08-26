@@ -49,7 +49,7 @@ def Detail_view(request, id):
     return render(request, 'detail_view.html', {'post': selected_post})
 
 def MyPosts(request):
-    posts = Post.objects.filter(author = request.user)
+    posts = Post.objects.filter(author = request.user).order_by('-created_at')
     print(request.user)
     return render(request, 'own_posts.html', {'posts': posts})
     

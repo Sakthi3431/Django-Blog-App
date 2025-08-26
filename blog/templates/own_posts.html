@@ -2,6 +2,7 @@
 {% load static %}
 {% csrf_token %}
 {% block content %}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
 <div class="container py-5">
   <div class="row g-4">
@@ -14,6 +15,15 @@
             <h5 class="card-title h2">{{ post.title }}</h5>
             <p class="card-text h6">{{ post.content|truncatewords:30 }}</p>
             <a class="btn btn-dark text-light btn-sm rounded-pill" href="{% url 'detail_view' post.id %}">Read More</a>
+            <div class="dropdown d-inline">
+            <button class="btn btn-light btn-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="bi bi-three-dots-vertical rounded-3"></i>  
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item text-primary" href="">Update</a></li>
+              <li><a class="dropdown-item text-danger" href="">Delete</a></li>
+            </ul>
+          </div>
           </div>
         </div>
       </div>
