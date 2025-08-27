@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def Home(request):
-    posts = Post.objects.all().order_by('-created_at')  # fetch posts
+    posts = Post.objects.all().order_by('-created_at')[:9]  # fetch posts
     return render(request, 'home.html', {'posts': posts})
 
 @login_required
@@ -24,6 +24,3 @@ def create_blog_post(request):
         form = PostForm()
     return render(request, 'create_post.html', context)
 
-def Detail_view(request, id):
-    selected_post = PostForm.objects.filter(id=id)
-    return render(request, 'detail_view.html', {'post': selected_post})

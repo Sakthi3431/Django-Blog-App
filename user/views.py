@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .forms import *
 from blog.models import Post
+from django.core.paginator import Paginator
 
 def LoginPage(request):
     if request.method == "POST":
@@ -41,13 +42,19 @@ def RegisterPage(request):
 
 @login_required(login_url='/user/login')
 def Dashboard(request):
-    posts = Post.objects.all().order_by('-created_at')  # fetch posts from db
+    post_list = Post.objects.all().order_by('-created_at')  # fetch posts from db
+    paginator = Paginator(post_list, 9)
+
+    page_number = request.GET.get('page')
+    posts = paginator.get_page(page_number)
     return render(request, 'dashboard.html', {'posts': posts})
 
+@login_required(login_url='/user/login')
 def Detail_view(request, id):
     selected_post = Post.objects.get(id=id)
     return render(request, 'detail_view.html', {'post': selected_post})
 
+@login_required(login_url='/user/login')
 def MyPosts(request):
     posts = Post.objects.filter(author = request.user).order_by('-created_at')
     print(request.user)
