@@ -8,4 +8,6 @@ urlpatterns = [
     path('new/', views.create_blog_post, name='create_post'),
     path('logout/', auth_views.LogoutView.as_view(next_page='home'), name='logout'),
     path('mypost/', MyPosts, name='mypost'),
+    path('mypost/delete/<int:id>', views.DeleteBlog, name='deletepost'),
+    path('mypost/update/<int:id>', views.UpdateBlog, name='updatepost'),
 ]

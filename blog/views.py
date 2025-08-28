@@ -24,3 +24,21 @@ def create_blog_post(request):
         form = PostForm()
     return render(request, 'create_post.html', context)
 
+def DeleteBlog(request, id):
+    selected_post = Post.objects.get(id=id)
+    selected_post.delete()
+    return redirect('mypost')
+
+def UpdateBlog(request, id):
+    selected_post = Post.objects.get(id=id)
+    if request.method == "POST":
+        form = PostForm(request.POST,request.FILES, instance=selected_post)
+        if form.is_valid():
+            form.save()
+            return redirect('mypost')
+        
+    else:
+        form = PostForm(instance=selected_post)
+
+    context = {'form' : form}
+    return render(request, 'create_post.html', context)

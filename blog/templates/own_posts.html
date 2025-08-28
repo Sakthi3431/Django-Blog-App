@@ -6,6 +6,7 @@
 
 <div class="container py-5">
   <div class="row g-4">
+    <a href="{% url 'create_post' %}"><button class="bg-primary rounded-3 text-light text-decoration-none p-2 border-0">Create New Blog</button></a>
     {% for post in posts %}
       <div class="col-lg-4 col-md-6 col-sm-12">
         <div class="card blog-card h-100 shadow-sm rounded">
@@ -20,8 +21,8 @@
               <i class="bi bi-three-dots-vertical rounded-3"></i>  
             </button>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item text-primary" href="">Update</a></li>
-              <li><a class="dropdown-item text-danger" href="">Delete</a></li>
+              <li><a class="dropdown-item text-primary" href="{% url 'updatepost' post.id %}">Edit</a></li>
+              <li><a class="dropdown-item text-danger" href="{% url 'deletepost' post.id %}">Delete</a></li>
             </ul>
           </div>
           </div>
@@ -30,7 +31,9 @@
       {% empty %}
     <p>You haven’t written any posts yet.</p>
     {% endfor %}
+    
   </div>
+
 </div>
 
 {% endblock %}

@@ -9,7 +9,11 @@
           <div class="card blog-card h-100">
             <h5 class="card-title h2 px-3">{{ post.title }}</h5>
             <div class="card-body">
-              <img src="{{ post.file.url }}" class="card-img-top" alt="post.title">
+              {% if post.file %}
+                <img src="{{ post.file.url }}" class="card-img-top" alt="{{ post.title }}">
+              {% else %}
+                <img src="{% static 'blog/assets/default.jpg' %}" class="card-img-top" alt="No image available">
+              {% endif %}
               <div class="text-success small">{{ post.created_at }} by {{ post.author }}</div>
               <div class="blog-content">
                 {{ post.content|linebreaks }}
