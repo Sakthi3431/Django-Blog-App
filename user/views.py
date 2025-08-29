@@ -57,6 +57,16 @@ def Detail_view(request, id):
 @login_required(login_url='/user/login')
 def MyPosts(request):
     posts = Post.objects.filter(author = request.user).order_by('-created_at')
-    print(request.user)
     return render(request, 'own_posts.html', {'posts': posts})
     
+def EditUser(request, id):
+    user = User.objects.get(id=id)
+    if request.method == "POST":
+        form = ProfileEditForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            return redirect("dashboard")
+        
+    else:
+        form = ProfileEditForm(instance=user)
+    return render(request, 'edit_profile.html', {"form":form, "user": user})

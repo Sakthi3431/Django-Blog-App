@@ -1,0 +1,46 @@
+{% extends 'oldbase.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% block content %}
+
+<div class="container my-5">
+    <div class="card shadow-lg border-0" style="max-width: 700px; margin:auto;">
+        <div class="card-header bg-primary text-light text-center">
+            <h4>Edit Profile</h4>
+        </div>
+        <div class="card-body p-4">
+            <form method="POST">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="id_username" class="form-label fw-bold">Username</label>
+                    {{ form.username| add_class:"form-control"}}
+                </div>
+                <div class="mb-3">
+                    <label for="id_email" class="form-label fw-bold">Email</label>
+                    {{ form.email| add_class:"form-control"}}
+                </div>
+                <div class="mb-3">
+                    <label for="id_password" class="form-label fw-bold">Password</label>
+                    {{ form.password| add_class:"form-control"}}
+                </div>
+                <div class="mb-3">
+                    <label for="id_confirmpassword" class="form-label fw-bold">Confirm Password</label>
+                    {{ form.password| add_class:"form-control"}}
+                </div>
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary px-4 me-2">Save Changes</button>
+                    <a href="{% url 'dashboard' %}" class="btn btn-secondary px-4">Cancel</a>
+                </div>
+            </form>
+            <div class="text-center">
+            <form action="{% url 'logout' %}" method="post" class="text-center" style="display:inline;">
+                                <button type="submit" class="btn btn-danger btn-sm mt-2">Logout</button>
+                            </form>
+                        </div>
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}

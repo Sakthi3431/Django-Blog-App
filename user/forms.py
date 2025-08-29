@@ -8,3 +8,13 @@ class RegistrationForm(forms.ModelForm):
     class Meta:
         model = Registration
         fields = ['username', 'email', 'password', 'confirmpassword']
+
+class ProfileEditForm(forms.ModelForm):
+    class Meta:
+        model = Registration
+        fields = ['username', 'email', 'password', 'confirmpassword']
+        widgets = {
+            'password':forms.PasswordInput(),
+            'confirmpassword': forms.PasswordInput()
+
+        }
