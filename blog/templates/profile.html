@@ -1,0 +1,21 @@
+{% extends 'oldbase.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% block content %}
+
+<div class="container my-5">
+    <div class="card shadow-lg border-0" style="max-width: 700px; margin:auto;">
+        <div class="card mb-3">
+            <div class="card-header">Profile</div>
+            <ul class="list-group list-group-flush">
+            <li class="list-group-item text-center"><img src="{% static 'blog/assets/user (1).png' %}" alt="+" style="height: 100px;"></li>
+            <li class="list-group-item"><a href="" class="text-decoration-none text-dark">Edit Profile</a></li>
+            <li class="list-group-item"><a href="" class="text-decoration-none text-dark">Change Password</a></li>
+            <li class="list-group-item"><a href="" class="text-decoration-none text-dark">Logout</a></li>
+            </ul>
+            </div>
+
+    </div>
+
+</div>
+{% endblock %}

@@ -18,3 +18,11 @@ class ProfileEditForm(forms.ModelForm):
             'confirmpassword': forms.PasswordInput()
 
         }
+
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['bio', 'profile_pic']
+        widgets = {
+            'bio':forms.Textarea(attrs={'class': 'form-control', 'row':3})
+        }

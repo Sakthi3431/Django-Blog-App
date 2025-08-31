@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import *
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User as AuthUser
@@ -59,6 +59,7 @@ def MyPosts(request):
     posts = Post.objects.filter(author = request.user).order_by('-created_at')
     return render(request, 'own_posts.html', {'posts': posts})
     
+@login_required(login_url='/user/login')
 def EditUser(request, id):
     user = User.objects.get(id=id)
     if request.method == "POST":
@@ -70,3 +71,6 @@ def EditUser(request, id):
     else:
         form = ProfileEditForm(instance=user)
     return render(request, 'edit_profile.html', {"form":form, "user": user})
+
+def Profile(request):
+    return render(request, 'profile.html')
