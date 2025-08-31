@@ -16,7 +16,7 @@ def LoginPage(request):
 
         if user is not None:
             login(request, user)   # creates session
-            return redirect("dashboard")   # or wherever
+            return redirect("dashboard")
         else:
             return render(request, "login_page.html", {"error": "Invalid username or password"})
 

@@ -4,9 +4,9 @@ from . import views
 from user.views import *
 
 urlpatterns = [
-    path('', views.Home, name='home'), 
+    path('', views.landing_page, name='home'), 
     path('new/', views.create_blog_post, name='create_post'),
-    path('logout/', auth_views.LogoutView.as_view(next_page='home'), name='logout'),
+    path('logout/', views.logout_view, name='logout'),
     path('mypost/', MyPosts, name='mypost'),
     path('mypost/delete/<int:id>', views.DeleteBlog, name='deletepost'),
     path('mypost/update/<int:id>', views.UpdateBlog, name='updatepost'),

@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth import logout
 from .models import Post
 from .forms import PostForm
 from django.contrib.auth.decorators import login_required
@@ -42,3 +43,12 @@ def UpdateBlog(request, id):
 
     context = {'form' : form}
     return render(request, 'create_post.html', context)
+
+def landing_page(request):
+    if request.user.is_authenticated:
+        return redirect('dashboard')   # your dashboard url name
+    return render(request, 'home.html')
+
+def logout_view(request):
+    logout(request)
+    return redirect('home')
