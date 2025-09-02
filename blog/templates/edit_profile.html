@@ -23,6 +23,10 @@
                     <label for="id_email" class="form-label fw-bold">Bio:</label>
                     {{ profile_form.bio|add_class:"form-control" }}
                 </div>
+                <div class="mb-3">
+                    <label for="id_file" class="form-label fw-bold">Image</label>
+                    {{ profile_form.profile_pic|add_class:"form-control" }}
+                </div>
                 <div class="text-center">
                     <button type="submit" class="btn btn-primary px-4 me-2">Save Changes</button>
                     <a href="{% url 'profile' %}" class="btn btn-secondary px-4">Cancel</a>
