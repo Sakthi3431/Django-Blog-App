@@ -10,4 +10,5 @@ urlpatterns = [
     path('mypost/', MyPosts, name='mypost'),
     path('mypost/delete/<int:id>', views.DeleteBlog, name='deletepost'),
     path('mypost/update/<int:id>', views.UpdateBlog, name='updatepost'),
+    path("search/", views.search, name="search"),
 ]

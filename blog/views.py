@@ -52,3 +52,11 @@ def landing_page(request):
 def logout_view(request):
     logout(request)
     return redirect('home')
+
+def search(request):
+    query = request.GET.get("q")
+    results = []
+    if query:
+        results = Post.objects.filter(title__icontains=query)  # case-insensitive search
+    
+    return render(request, "search_results.html", {"results": results, "query": query})

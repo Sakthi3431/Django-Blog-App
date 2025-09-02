@@ -1,0 +1,25 @@
+{% extends "oldbase.html" %}
+{% block content %}
+<div class="container py-5">
+    <h3 class="text-center">Search results for "{{ query }}"</h3>
+  <div class="row g-4">
+        {% if results %}
+            {% for post in results %}
+      <div class="col-lg-4 col-md-6 col-sm-12">
+        <div class="card blog-card h-100 shadow-sm rounded">
+          <img src="{{ post.file_url }}" class="card-img-top" alt="{{ post.title }}">
+          <div class="card-body">
+            <div class="text-success small">{{ post.created_at }} by {{ post.author }}</div>
+            <h5 class="card-title h2">{{ post.title }}</h5>
+            <p class="card-text h6">{{ post.content|truncatewords:30 }}</p>
+            <a class="btn btn-dark text-light btn-sm rounded-pill" href="{% url 'detail_view' post.id %}">Read More</a>
+          </div>
+        </div>
+      </div>
+   {% endfor %}
+        {% else %}
+            <p>No results found.</p>
+        {% endif %}
+  </div>
+</div>
+{% endblock %}
