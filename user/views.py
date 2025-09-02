@@ -7,6 +7,9 @@ from django.contrib import messages
 from .forms import *
 from blog.models import Post
 from django.core.paginator import Paginator
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth import update_session_auth_hash
+
 
 def LoginPage(request):
     if request.method == "POST":
@@ -62,15 +65,40 @@ def MyPosts(request):
 @login_required(login_url='/user/login')
 def EditUser(request, id):
     user = User.objects.get(id=id)
+    profile, created = Profile.objects.get_or_create(user=user)
+
     if request.method == "POST":
-        form = ProfileEditForm(request.POST, instance=user)
-        if form.is_valid():
-            form.save()
-            return redirect("dashboard")
+        user_form = ProfileEditForm(request.POST, instance=user)
+        profile_form = ProfileForm(request.POST, request.FILES, instance=profile)
+
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            return redirect("dashboard")  # ✅ will redirect properly
         
     else:
-        form = ProfileEditForm(instance=user)
-    return render(request, 'edit_profile.html', {"form":form, "user": user})
+        user_form = ProfileEditForm(instance=user)
+        profile_form = ProfileForm(instance=profile)
 
-def Profile(request):
+    return render(request, 'edit_profile.html', {
+        "user_form": user_form,
+        "profile_form": profile_form,
+        "user": user
+    })
+
+def EditPass(request, id):
+    user = User.objects.get(id=id)
+
+    if request.method == 'POST':
+        form = PasswordChangeForm(user, request.POST)
+        if form.is_valid():
+            user = form.save()  
+            update_session_auth_hash(request, user)
+            return redirect('dashboard')
+    else:
+        form = PasswordChangeForm(user)
+
+    return render(request, 'changepass.html', {"form":form, "user": user})
+
+def Profilepage(request):
     return render(request, 'profile.html')

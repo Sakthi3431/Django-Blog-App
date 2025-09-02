@@ -1,31 +1,32 @@
 {% extends 'oldbase.html' %}
-{% load static %}
 {% load widget_tweaks %}
-{% block content %}
 
+{% block content %}
 <div class="container my-5">
     <div class="card shadow-lg border-0" style="max-width: 700px; margin:auto;">
         <div class="card-header bg-primary text-light text-center">
-            <h4>Edit Profile</h4>
+            <h4>Change Password</h4>
         </div>
         <div class="card-body p-4">
-            <form method="POST" enctype="multipart/form-data">
+            <form method="POST">
                 {% csrf_token %}
+                
                 <div class="mb-3">
-                    <label for="id_username" class="form-label fw-bold">Username:</label>
-                    {{ user_form.username|add_class:"form-control" }}
+                    <label class="form-label fw-bold">Old Password:</label>
+                    {{ form.old_password|add_class:"form-control" }}
                 </div>
                 <div class="mb-3">
-                    <label for="id_email" class="form-label fw-bold">Email:</label>
-                    {{ user_form.email|add_class:"form-control" }}
+                    <label class="form-label fw-bold">New Password:</label>
+                    {{ form.new_password1|add_class:"form-control" }}
                 </div>
                 <div class="mb-3">
-                    <label for="id_email" class="form-label fw-bold">Bio:</label>
-                    {{ profile_form.bio|add_class:"form-control" }}
+                    <label class="form-label fw-bold">Confirm New Password:</label>
+                    {{ form.new_password2|add_class:"form-control" }}
                 </div>
+
                 <div class="text-center">
                     <button type="submit" class="btn btn-primary px-4 me-2">Save Changes</button>
-                    <a href="{% url 'profile' %}" class="btn btn-secondary px-4">Cancel</a>
+                    <a href="{% url 'dashboard' %}" class="btn btn-secondary px-4">Cancel</a>
                 </div>
             </form>
         </div>
