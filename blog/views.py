@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import logout
-from .models import Post
+from .models import Post, Comment
 from .forms import PostForm, CommentForm
 from django.contrib.auth.decorators import login_required
 
@@ -63,3 +63,13 @@ def search(request):
         results = Post.objects.filter(title__icontains=query)  # case-insensitive search
     
     return render(request, "search_results.html", {"results": results, "query": query})
+
+def delete_comment(request, comment_id):
+    comment = get_object_or_404(Comment, id=comment_id)
+
+    if request.user == comment.user or request.user == comment.post.author:
+        comment.delete()
+    else:
+        pass
+
+    return redirect("detail_view", id= comment.post.id)

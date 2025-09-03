@@ -56,22 +56,44 @@
       </div>
       <button type="submit" class="btn btn-primary mt-2">Post Comment</button>
     </form>
-
   {% else %}
     <p><a href="{% url 'login' %}">Login</a> to post a comment</p>
   {% endif %}
-{% if comment_form.errors %}
-  <div class="alert alert-danger">
-    {{ comment_form.errors }}
-  </div>
-{% endif %}
+
+  {% if comment_form.errors %}
+    <div class="alert alert-danger">
+      {{ comment_form.errors }}
+    </div>
+  {% endif %}
 
   <div>
     {% for comment in comments %}
-      <div class="border rounded p-2 mb-2">
-        <strong>{{ comment.user.username }}</strong>
-        <small class="text-muted">{{ comment.cmt_created_at|date:"d M, Y H:i" }}</small>
-        <p class="mb-0">{{ comment.content }}</p>
+      <div class="border rounded p-3 mb-3 d-flex">
+        <!-- Profile Picture -->
+        {% if comment.user.profile.profile_pic %}
+          <img src="{{ comment.user.profile.profile_pic.url }}" 
+               alt="{{ comment.user.username }}" 
+               class="rounded-circle me-3"
+               style="height: 50px; width: 50px; object-fit: cover;">
+        {% else %}
+          <img src="{% static 'blog/assets/user (1).png' %}" 
+               alt="Default Profile Picture" 
+               class="rounded-circle me-3"
+               style="height: 50px; width: 50px; object-fit: cover;">
+        {% endif %}
+
+        <!-- Comment Content -->
+        <div>
+          <strong>{{ comment.user.username }}</strong>
+          {% if user == comment.user or user == post.author %}
+            <a href="{% url 'delete_comment' comment.id %}"><img src="{% static 'blog/assets/delete.png' %}" alt="delete_image" style="height:10px; width: 10px;"/></a>
+            {% endif %}
+          <small class="text-muted d-block">{{ comment.cmt_created_at|date:"d M, Y H:i" }}</small>
+          <p class="mb-0">{{ comment.content }}</p>
+
+          
+          </form>
+        </div>
       </div>
     {% empty %}
       <p>No Comments yet. Be the first to comment</p>
