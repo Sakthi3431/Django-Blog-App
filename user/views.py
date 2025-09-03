@@ -9,6 +9,7 @@ from blog.models import Post
 from django.core.paginator import Paginator
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
+from blog.forms import CommentForm
 
 
 def LoginPage(request):
@@ -53,9 +54,31 @@ def Dashboard(request):
     return render(request, 'dashboard.html', {'posts': posts})
 
 @login_required(login_url='/user/login')
-def Detail_view(request, id):
-    selected_post = Post.objects.get(id=id)
-    return render(request, 'detail_view.html', {'post': selected_post})
+def detail_view(request, id):
+    # fetch the post safely
+    post = get_object_or_404(Post, id=id)
+
+    # handle comment submission
+    if request.method == "POST":
+        comment_form = CommentForm(request.POST)
+        if comment_form.is_valid():
+            comment = comment_form.save(commit=False)
+            comment.post = post
+            comment.user = request.user
+            comment.save()
+            return redirect("detail_view", id=post.id)  # single consistent redirect
+    else:
+        comment_form = CommentForm()
+
+    # fetch all comments for this post
+    comments = post.comments.all().order_by("-cmt_created_at")
+
+    return render(request, "detail_view.html", {
+        "post": post,
+        "comment_form": comment_form,
+        "comments": comments
+    })
+
 
 @login_required(login_url='/user/login')
 def MyPosts(request):

@@ -1,7 +1,7 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import logout
 from .models import Post
-from .forms import PostForm
+from .forms import PostForm, CommentForm
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
@@ -9,7 +9,7 @@ def Home(request):
     posts = Post.objects.all().order_by('-created_at')[:9]  # fetch posts
     return render(request, 'home.html', {'posts': posts})
 
-@login_required
+@login_required(login_url='/user/login')
 def create_blog_post(request):
     context = {
         'form' : PostForm()
@@ -25,11 +25,13 @@ def create_blog_post(request):
         form = PostForm()
     return render(request, 'create_post.html', context)
 
+@login_required(login_url='/user/login')
 def DeleteBlog(request, id):
     selected_post = Post.objects.get(id=id)
     selected_post.delete()
     return redirect('mypost')
 
+@login_required(login_url='/user/login')
 def UpdateBlog(request, id):
     selected_post = Post.objects.get(id=id)
     if request.method == "POST":
@@ -53,6 +55,7 @@ def logout_view(request):
     logout(request)
     return redirect('home')
 
+@login_required(login_url='/user/login')
 def search(request):
     query = request.GET.get("q")
     results = []
