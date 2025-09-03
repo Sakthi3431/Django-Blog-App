@@ -98,9 +98,9 @@ p.wrapp {
                 <li class="nav-item">
                 <a class="nav-link" href="{% url 'profile' %}">
                   {% if user.profile.profile_pic %}
-                  <img src="{{ user.profile.profile_pic.url }}" alt="+" style="height: 30px;" class="rounded-circle me-3">
+                  <img src="{{ user.profile.profile_pic.url }}" alt="+" style="height: 30px; width: 30px; object-fit: cover;" class="rounded-circle me-3">
                   {% else %}
-                <img src="{% static 'blog/assets/user (1).png' %}" alt="+" style="height: 30px;" class="rounded-circle me-3">
+                <img src="{% static 'blog/assets/user (1).png' %}" alt="+" style="height: 30px; width: 30px; object-fit: cover;" class="rounded-circle me-3">
                   {% endif %}
                 </a>
               </li>
