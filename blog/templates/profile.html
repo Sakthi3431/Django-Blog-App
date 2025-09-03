@@ -14,13 +14,13 @@
                 <img src="{{ user.profile.profile_pic.url }}" 
                     alt="Profile Picture" 
                     class="rounded-circle me-3"
-                    style="height: 80px; width: 80px; object-fit: cover;">
+                    style="height: 80px; width: 100px; object-fit: cover;">
             {% else %}
                 <img src="{% static 'blog/assets/user (1).png' %}" 
                     alt="Default Profile Picture" 
                     class="rounded-circle me-3"
-                    style="height: 80px; width: 80px; object-fit: cover;">
-            {% endif %}
+                    style="height: 80px; width: 100px; object-fit: cover;">
+            {% endif %}?
 
             <!-- Username and Bio -->
             <div>

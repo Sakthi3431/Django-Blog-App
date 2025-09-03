@@ -10,11 +10,17 @@
         <!-- Profile + Author Row -->
         <div class="d-flex align-items-center mb-3">
           <!-- Profile Picture -->
-          <img src="{{ user.profile.profile_pic.url }}" 
+           {% if post.author.profile.profile_pic %}
+          <img src="{{ post.author.profile.profile_pic.url }}" 
                alt="Profile Picture" 
                class="rounded-circle me-3"
                style="height: 40px; width: 40px; object-fit: cover;">
-          
+          {% else %}
+               <img src="{% static 'blog/assets/user (1).png' %}" 
+                    alt="Profile Picture" 
+                    class="rounded-circle me-3"
+                    style="height: 40px; width: 40px; object-fit: cover;">
+          {% endif %}
           <!-- Author and Date -->
           <div>
             <h5 class="mb-0">{{ post.author }}</h5>
