@@ -13,4 +13,6 @@ urlpatterns = [
     path('mypost/update/<int:id>', views.UpdateBlog, name='updatepost'),
     path("search/", views.search, name="search"),
     path("comment/<int:comment_id>/delete/", views.delete_comment, name="delete_comment"),
+    path("trending/", views.trending_post, name="trending_post"),
+
 ]

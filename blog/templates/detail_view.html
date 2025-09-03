@@ -30,13 +30,14 @@
 
         <!-- Title -->
         <h3 class="card-title mb-3">{{ post.title }}</h3>
-
+        
         <!-- Image -->
         {% if post.file %}
-          <img src="{{ post.file.url }}" class="card-img-top mb-3" alt="{{ post.title }}">
+        <img src="{{ post.file.url }}" class="card-img-top mb-3" alt="{{ post.title }}">
         {% else %}
-          <img src="{% static 'blog/assets/default.jpg' %}" class="card-img-top mb-3" alt="No image available">
+        <img src="{% static 'blog/assets/default.jpg' %}" class="card-img-top mb-3" alt="No image available">
         {% endif %}
+        <p class="text-muted small d-inline">👁️ {{ post.views }} views</p>
 
         <!-- Content -->
         <div class="blog-content">

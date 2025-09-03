@@ -57,7 +57,8 @@ def Dashboard(request):
 def detail_view(request, id):
     # fetch the post safely
     post = get_object_or_404(Post, id=id)
-
+    post.views += 1
+    post.save(update_fields=["views"])
     # handle comment submission
     if request.method == "POST":
         comment_form = CommentForm(request.POST)

@@ -73,3 +73,7 @@ def delete_comment(request, comment_id):
         pass
 
     return redirect("detail_view", id= comment.post.id)
+
+def trending_post(request):
+    posts = Post.objects.all().order_by('-views')  # fetch posts
+    return render(request, 'trending_post.html', {'posts': posts})
