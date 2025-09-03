@@ -3,6 +3,7 @@ from django.contrib.auth import logout
 from .models import Post, Comment
 from .forms import PostForm, CommentForm
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 # Create your views here.
 def Home(request):
@@ -49,6 +50,8 @@ def UpdateBlog(request, id):
 def landing_page(request):
     if request.user.is_authenticated:
         return redirect('dashboard')   # your dashboard url name
+    else:
+        messages.error(request, "Username or Password Mismatch")
     return render(request, 'home.html')
 
 def logout_view(request):
