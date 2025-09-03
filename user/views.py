@@ -110,6 +110,7 @@ def EditUser(request, id):
         "user": user
     })
 
+@login_required(login_url='/user/login')
 def EditPass(request, id):
     user = User.objects.get(id=id)
 
@@ -124,5 +125,7 @@ def EditPass(request, id):
 
     return render(request, 'changepass.html', {"form":form, "user": user})
 
+@login_required(login_url='/user/login')
 def Profilepage(request):
-    return render(request, 'profile.html')
+    posts = Post.objects.filter(author = request.user).order_by('-created_at')
+    return render(request, 'profile.html', {'posts': posts})

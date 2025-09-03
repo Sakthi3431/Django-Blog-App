@@ -64,6 +64,7 @@ def search(request):
     
     return render(request, "search_results.html", {"results": results, "query": query})
 
+@login_required(login_url='/user/login')
 def delete_comment(request, comment_id):
     comment = get_object_or_404(Comment, id=comment_id)
 
@@ -74,6 +75,7 @@ def delete_comment(request, comment_id):
 
     return redirect("detail_view", id= comment.post.id)
 
+@login_required(login_url='/user/login')
 def trending_post(request):
     posts = Post.objects.all().order_by('-views')  # fetch posts
     return render(request, 'trending_post.html', {'posts': posts})
