@@ -48,11 +48,12 @@ def UpdateBlog(request, id):
     return render(request, 'create_post.html', context)
 
 def landing_page(request):
+    posts = Post.objects.all().order_by('-created_at')[:9]  # fetch posts
     if request.user.is_authenticated:
         return redirect('dashboard')   # your dashboard url name
     else:
-        messages.error(request, "Username or Password Mismatch")
-    return render(request, 'home.html')
+        pass
+    return render(request, 'home.html', {'posts': posts})
 
 def logout_view(request):
     logout(request)
